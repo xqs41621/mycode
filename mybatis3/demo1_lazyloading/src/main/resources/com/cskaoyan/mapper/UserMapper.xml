@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace是命名空间，就是当前映射文件的id-->
+<mapper namespace="com.cskaoyan.mapper.UserMapper" >
+    <resultMap id="userMap" type="com.cskaoyan.bean.User">
+        <result column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="age" property="age"/>
+        <!--一对一是association-->
+        <association property="userDetail" column="id" select="com.cskaoyan.mapper.UserMapper.queryUserDetailById" fetchType="lazy"/>
+        <!--一对多是collection-->
+        <collection property="orderList" column="id" select="com.cskaoyan.mapper.UserMapper.queryOrderById" fetchType="lazy"/>
+    </resultMap>
+    <select id="queryUserById" resultMap="userMap">
+        select id,username,password,age from user where id = #{id}
+    </select>
+    <select id="queryUserDetailById" resultType="com.cskaoyan.bean.UserDetail">
+        select id,email,phone from user_detail where uid = #{id}
+    </select>
+    <select id="queryOrderById" resultType="com.cskaoyan.bean.Order">
+        select id,order_name as orderName from user_order where uid = #{ttt}
+
+    </select>
+
+</mapper>

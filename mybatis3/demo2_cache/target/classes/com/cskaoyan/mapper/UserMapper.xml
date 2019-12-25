@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace是命名空间，就是当前映射文件的id-->
+<mapper namespace="com.cskaoyan.mapper.UserMapper" >
+    <cache/>
+    <resultMap id="userMap" type="com.cskaoyan.bean.User">
+        <result column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="age" property="age"/>
+    </resultMap>
+    <select id="queryUserById" resultMap="userMap">
+        select id,username,password,age from user where id = #{id}
+    </select>
+    <delete id="deleteUserById">
+        delete from user where id=#{id}
+    </delete>
+
+</mapper>
